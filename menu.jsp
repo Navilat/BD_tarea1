@@ -9,11 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>ERROR!</title>
     </head>
     <body>
-        <h1>Login Success!</h1>
-        <h4>Hola soy un menu...</h4>
+        <h1>ERROR!</h1>
+        <h4>El usuario y/o contraseña son incorrectos o no existen.</h4>
         <a href="login.jsp">volver</a>
     </body>
 </html>
