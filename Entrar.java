@@ -2,16 +2,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.testservler.sample;
+package Servlets;
 
+import OracleConection.Main;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +25,8 @@ public class Entrar extends HttpServlet {
     static Connection conn=null;
     static Statement st=null;
     static ResultSet rs=null;
+    static String user;
+    static String pass;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,8 +38,8 @@ public class Entrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = request.getParameter("txtUserName");
-        String pass = request.getParameter("txtPassword");
+        user = request.getParameter("txtUserName");
+        pass = request.getParameter("txtPassword");
         try {
             int rowcount=0;
             conn=Main.Enlace(conn);
@@ -61,10 +64,76 @@ public class Entrar extends HttpServlet {
             rs.beforeFirst();
             while (rs.next()) {
                 if(rs.getString(1).equals("admin")){
-                    response.sendRedirect("admin_menu.jsp");
+                    response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Menu Administrador:</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h5>" + user + " como: administrador.</h5>");
+            out.println("<form name=\"ingresar_vendedor\" action=\"ingresar_vendedor\">");
+            out.println("<input id=\"boton_ing_vendr\" value=\"Ingresar Vendedor\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"ingresar_cliente\" action=\"ingresar_cliente\">");
+            out.println("<input id=\"boton_ing_cliente\" value=\"Ingresar Cliente\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"administrar_productos\" action=\"administrar_productos\">");
+            out.println("<input id=\"boton_admin_prod\" value=\"Administrar Productos\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"ingresar_compra\" action=\"ingresar_compra\">");
+            out.println("<input id=\"boton_ing_compra\" value=\"Ingresar Compra\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"ingresar_venta\" action=\"ingresar_venta\">");
+            out.println("<input id=\"boton_ing_venta\" value=\"Ingresar Venta\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"ver_ventas\" action=\"ver_ventas\">");
+            out.println("<input id=\"boton_ver_ventas\" value=\"Ver Ventas por Cliente\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<br/>");
+            out.println("<a href=\"login.jsp\">volver</a>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
+                    //response.sendRedirect("admin_menu.jsp");
                 }
                 else if(rs.getString(1).equals("vendedor")){
-                    response.sendRedirect("vendedor_menu.jsp");
+                    response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Menu Vendedor</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h5>" + user + " como: vendedor.</h5>");
+            out.println("<form name=\"ingresar_cliente\" action=\"ingresar_cliente\">");
+            out.println("<input id=\"boton_ing_cliente\" value=\"Ingresar Cliente\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"ingresar_venta\" action=\"ingresar_venta\">");
+            out.println("<input id=\"boton_ingr_venta\" value=\"Ingresar Venta\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"ver_ventas\" action=\"ver_ventas\">");
+            out.println("<input id=\"boton_ver_ventas\" value=\"Ver Ventas por Cliente\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<form name=\"mis_ventas\" action=\"mis_ventas\">");
+            out.println("<input id=\"boton_mis_ventas\" value=\"Mis Ventas\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<br/>");
+            out.println("<a href=\"login.jsp\">volver</a>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
+                    //response.sendRedirect("vendedor_menu.jsp");
                 }
                 else {
                     response.sendRedirect("menu.jsp"); //En caso de que el usuario buscado sea de tipo distinto de 'admin' o 'vendedor'

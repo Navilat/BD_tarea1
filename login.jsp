@@ -12,7 +12,7 @@
             <input id="txtUserName" name="txtUserName" type="text" /><br/>
             Contraseña:
             <input id="txtPassword" name="txtPassword" type="password" />
-            <input id="botonInico" value="Entrar" type="submit" />
+            <input id="botonInico" value="Iniciar" type="submit" />
             
         </form>
     </body>
