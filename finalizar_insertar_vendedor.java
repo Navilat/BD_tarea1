@@ -8,7 +8,6 @@ package Servlets;
 
 import OracleConection.Main;
 import static Servlets.Entrar.*;
-import static Servlets.Entrar.user;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -38,50 +38,100 @@ public class finalizar_insertar_vendedor extends HttpServlet {
         String rut = request.getParameter("txtRut");
         String contrasena = request.getParameter("txtContrasena");
         String nombre = request.getParameter("txtNombre");
-        String comision = request.getParameter("txtComision"); 
-        try {
-            int rowcount=0;
-            conn=Main.Enlace(conn);
-            st=Main.sta(st);
-            rs=Main.EnlEst(rs);
-            rs.next();
+        String contrasena2 = request.getParameter("txtContrasena2"); 
+        
+        if (contrasena.equals(contrasena2)){
+        
+            try {
+                int rowcount=0;
+                conn=Main.Enlace(conn);
+                st=Main.sta(st);
+                rs=Main.EnlEst(rs);
+                rs.next();
             
-            //para hacer consulta
-            rs=st.executeQuery("INSERT INTO usuario (rut, contrasena, nombre, tipo, comision) values ('"+rut+"','"+contrasena+"','"+nombre+"','vendedor','"+comision+"')");
-         }catch (Exception e){
-            System.out.println(e.getMessage());
-         }
+                //para hacer consulta
+                rs=st.executeQuery("INSERT INTO usuario (rut, contrasena, nombre, tipo, comision) values ('"+rut+"','"+contrasena+"','"+nombre+"','vendedor','0')");
+                JOptionPane.showMessageDialog(null, "Vendedor guardado");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
             
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Ingresar Vendedor:</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h5>" + user + " como: administrador.</h5>");
-            out.println("<h4>Ingrese los datos del nuevo vendedor:</h4>");
-            out.println("<br/>");
-            out.println("<form name=\"datos\" action=\"finalizar_insertar_vendedor\" method=\"Post\">");
-            out.println("Rut:");
-            out.println("<input id=\"txtRut\" name=\"txtRut\" type=\"text\" /><br/>");
-            out.println("Contraseña:");
-            out.println("<input id=\"txtContrasena\" name=\"txtContrasena\" type=\"password\" /><br/>");
-            out.println("Nombre:");
-            out.println("<input id=\"txtNombre\" name=\"txtNombre\" type=\"text\" /><br/>");
-            out.println("Comision:");
-            out.println("<input id=\"txtComision\" name=\"txtComision\" type=\"text\" /><br/>");
-            out.println("<input id=\"botonGuardar\" value=\"Guardar\" type=\"submit\" />");
-            out.println("</form>");
-            out.println("<br/><h4>Operacion realizada exitosamente!</h4>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Ingresar Vendedor:</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h5>" + user + " como: administrador.</h5>");
+                out.println("<h4>Ingrese los datos del nuevo vendedor:</h4>");
+                out.println("<br/>");
+                out.println("<form name=\"datos\" action=\"finalizar_insertar_vendedor\" method=\"Post\">");
+                out.println("Rut:");
+                out.println("<input id=\"txtRut\" name=\"txtRut\" type=\"text\" /><br/>");
+                out.println("Contraseña:");
+                out.println("<input id=\"txtContrasena\" name=\"txtContrasena\" type=\"password\" /><br/>");
+                out.println("Repetir contraseña:");
+                out.println("<input id=\"txtContrasena2\" name=\"txtContrasena2\" type=\"password\" /><br/>");
+                out.println("Nombre:");
+                out.println("<input id=\"txtNombre\" name=\"txtNombre\" type=\"text\" /><br/>");
+                out.println("<input id=\"botonGuardar\" value=\"Finalizar\" type=\"submit\" />");
+                out.println("</form>");
+                out.println("<br/>");
+            
+                out.println("<form name=\"datos\" action=\"adminMenu\" method=\"Post\">");
+                out.println("<input id=\"botonVolver\" value=\"Volver\" type=\"submit\" />");
+                out.println("</form>");
+            
+                out.println("</body>");
+                out.println("</html>");
+            } finally {
+                out.close();
+            }
+            
+        }else{
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Ingresar Vendedor:</title>");            
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h5>" + user + " como: administrador.</h5>");
+                out.println("<h4>Ingrese los datos del nuevo vendedor:</h4>");
+                out.println("<br/>");
+                out.println("<form name=\"datos\" action=\"finalizar_insertar_vendedor\" method=\"Post\">");
+                out.println("Rut:");
+                out.println("<input id=\"txtRut\" name=\"txtRut\" type=\"text\" value=\""+rut+"\"/><br/>");
+                out.println("Contraseña:");
+                out.println("<input id=\"txtContrasena\" name=\"txtContrasena\" type=\"password\" value=\""+contrasena+"\"/><br/>");
+                out.println("Repetir contraseña:");
+                out.println("<input id=\"txtContrasena2\" name=\"txtContrasena2\" type=\"password\" value=\""+contrasena2+"\"/><br/>");
+                out.println("Nombre:");
+                out.println("<input id=\"txtNombre\" name=\"txtNombre\" type=\"text\" value=\""+nombre+"\"/><br/>");
+                out.println("<input id=\"botonGuardar\" value=\"Finalizar\" type=\"submit\" />");
+                out.println("</form>");
+                out.println("<br/>");
+            
+                out.println("<form name=\"datos\" action=\"adminMenu\" method=\"Post\">");
+                out.println("<input id=\"botonVolver\" value=\"Volver\" type=\"submit\" />");
+                out.println("</form>");
+            
+                out.println("</body>");
+                out.println("</html>");
+            } finally {
+                out.close();
+            }
+            JOptionPane.showMessageDialog(null, "Contraseñas no coinciden");
         }
+            
+        
     }
     
    
