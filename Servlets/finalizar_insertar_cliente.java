@@ -6,7 +6,7 @@ package Servlets;
 
 import OracleConection.Main;
 import static Servlets.Entrar.*;
-import static Servlets.ingresar_cliente.tipo;
+import static Servlets.Entrar.tipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

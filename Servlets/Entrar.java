@@ -27,6 +27,7 @@ public class Entrar extends HttpServlet {
     static ResultSet rs=null;
     static String user;
     static String pass;
+    static String tipo;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,6 +41,25 @@ public class Entrar extends HttpServlet {
             throws ServletException, IOException {
         user = request.getParameter("txtUserName");
         pass = request.getParameter("txtPassword");
+        try{
+            conn=Main.Enlace(conn);
+            st=Main.sta(st);
+            rs=Main.EnlEst(rs);
+            rs.next();
+            
+            rs = st.executeQuery("select tipo from usuario where nombre='"+user+"'");
+            rs.next();
+            if(rs.getString("tipo").equals("admin")){
+            tipo = "admin";
+            }
+            else{
+                tipo = "vendedor";
+            }
+        }
+        catch(Exception ex){
+            
+        }
+        
         try {
             int rowcount=0;
             conn=Main.Enlace(conn);
