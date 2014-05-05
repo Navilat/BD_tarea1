@@ -6,6 +6,7 @@ package Servlets;
 
 import OracleConection.Main;
 import static Servlets.Entrar.*;
+import static Servlets.ingresar_cliente.tipo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -44,8 +45,41 @@ public class finalizar_insertar_cliente extends HttpServlet {
                     
                     rs.first();
                     rs=st.executeQuery("INSERT INTO cliente (rut, nombre) values ('"+rut+"','"+nombre+"')");
-                    JOptionPane.showMessageDialog(null, "El cliente ha sido agregado satisfactoriamente.");
+                    //JOptionPane.showMessageDialog(null, "El cliente ha sido agregado satisfactoriamente.");
                     //response.sendRedirect("ingresar_venta.jsp");
+                    response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Ingresar Cliente:</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h5>" + user + " como: " + tipo + ".</h5>");
+            out.println("<h4>Ingrese los datos del nuevo cliente:</h4>");
+            out.println("<br/>");
+            out.println("<form name=\"datos\" action=\"finalizar_insertar_cliente\" method=\"Post\">");
+            out.println("Rut:");
+            out.println("<input id=\"txtRut\" name=\"txtRut\" type=\"text\" /><br/>");
+            out.println("Nombre:");
+            out.println("<input id=\"txtNombre\" name=\"txtNombre\" type=\"text\" /><br/>");
+           
+            out.println("<input id=\"botonGuardar\" value=\"Finalizar\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<br/>");
+            //Volver
+            out.println("<form name=\"datos\" action=\"adminMenu\" method=\"Post\">");
+            out.println("<input id=\"botonVolver\" value=\"Volver\" type=\"submit\" />");
+            out.println("</form>");
+            out.println("<br/><h4>Cliente agregado exitosamente!</h4>");
+            
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
                 }catch (Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -78,10 +112,11 @@ public class finalizar_insertar_cliente extends HttpServlet {
                     out.println("<form name=\"datos\" action=\"adminMenu\" method=\"Post\">");
                     out.println("<input id=\"botonVolver\" value=\"Volver\" type=\"submit\" />");
                     out.println("</form>");
+                    out.println("<br/><h4>ERROR! Cliente ya existe. (Rut repetido)</h4>");
             
                     out.println("</body>");
                     out.println("</html>");
-                    JOptionPane.showMessageDialog(null, "El cliente ya existe.");
+                    //JOptionPane.showMessageDialog(null, "El cliente ya existe.");
                 } finally {
                     out.close();
                 }

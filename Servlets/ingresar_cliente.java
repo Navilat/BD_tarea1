@@ -4,6 +4,7 @@
  */
 package Servlets;
 
+import OracleConection.Main;
 import static Servlets.Entrar.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ingresar_cliente", urlPatterns = {"/ingresar_cliente"})
 public class ingresar_cliente extends HttpServlet {
+    static String tipo;
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,6 +31,25 @@ public class ingresar_cliente extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        try{
+            conn=Main.Enlace(conn);
+            st=Main.sta(st);
+            rs=Main.EnlEst(rs);
+            rs.next();
+            
+            rs = st.executeQuery("select tipo from usuario where nombre='"+user+"'");
+            rs.next();
+            if(rs.getString("tipo").equals("admin")){
+            tipo = "admin";
+            }
+            else{
+                tipo = "vendedor";
+            }
+        }
+        catch(Exception ex){
+            
+        }
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
@@ -61,6 +82,7 @@ public class ingresar_cliente extends HttpServlet {
         } finally {
             out.close();
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

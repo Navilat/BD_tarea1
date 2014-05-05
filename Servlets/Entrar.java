@@ -74,7 +74,7 @@ public class Entrar extends HttpServlet {
             out.println("<title>Menu Administrador:</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h5>" + user + " como: administrador.</h5>");
+            out.println("<h5>" + user + " como: admin.</h5>");
             out.println("<form name=\"ingresar_vendedor\" action=\"ingresar_vendedor\">");
             out.println("<input id=\"boton_ing_vendr\" value=\"Ingresar Vendedor\" type=\"submit\" />");
             out.println("</form>");
