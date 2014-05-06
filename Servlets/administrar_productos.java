@@ -65,7 +65,7 @@ public class administrar_productos extends HttpServlet {
             
         }
             
-            out.println("<br/><form name=\"editar_producto\" action=\"editar_producto\">");
+            out.println("<br/><form name=\"editar_producto\" action=\"editar_producto\" method=\"Post\">");
             out.println("Ingrese ID del producto a editar: ");
             out.println("<input id=\"txtID\" name=\"txtID\" type=\"text\" />");
             out.println("<input id=\"boton_edit_producto\" value=\"Editar\" type=\"submit\" />");

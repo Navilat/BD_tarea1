@@ -12,6 +12,7 @@ import static Servlets.Entrar.rs;
 import static Servlets.Entrar.st;
 import static Servlets.Entrar.tipo;
 import static Servlets.Entrar.user;
+import static Servlets.editar_producto.ID;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -24,10 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Nacho
  */
-@WebServlet(name = "editar_producto", urlPatterns = {"/editar_producto"})
-public class editar_producto extends HttpServlet {
+@WebServlet(name = "finalizar_editar_producto", urlPatterns = {"/finalizar_editar_producto"})
+public class finalizar_editar_producto extends HttpServlet {
 
-    static String ID;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,16 +40,10 @@ public class editar_producto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        ID = request.getParameter("txtID");
+        String nombre_nuevo = request.getParameter("nombre_nuevo");
+        String categoria_nueva = request.getParameter("categoria_nueva");
+        String precio_nuevo = request.getParameter("precio_nuevo");
         int ID_int = Integer.parseInt(ID);
-        String nombre;
-        String precio;
-        String cantidad;
-        String categoria;
-        
-        int precio_int;
-        int cantidad_int;
-        
         
         
         response.setContentType("text/html;charset=UTF-8");
@@ -59,40 +53,40 @@ public class editar_producto extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Editar producto:</title>");            
+            out.println("<title>Servlet finalizar_editar_producto</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h5>" + user + " como: " + tipo + ".</h5><br/>");
-            out.println("<h3>Modifique los campos a editar: </h3>");
-            out.println("<form name=\"editar\" action=\"finalizar_editar_producto\" method=\"Post\">");
-            out.println("<ul>");
-            out.println("<li>ID : "+ID_int+"</li>");
             try{
-        
-            conn=Main.Enlace(conn);
+                conn=Main.Enlace(conn);
             st=Main.sta(st);
             rs=Main.EnlEst(rs);
             rs.next();
             
             rs = st.executeQuery("select * from producto where id_producto="+ID_int+"");
             rs.next();
-            cantidad = rs.getString("stock");
-            nombre = rs.getString("descripcion");
-            categoria = rs.getString("categoria");
-            precio = rs.getString("precio");
             
-        
-            
-            out.println("<li>Stock : "+cantidad+"</li>");
-            out.println("<li>Nombre : <input id=\"nombre_nuevo\" name=\"nombre_nuevo\" type=\"text\" value=\""+nombre+"\" /></li>");
-            out.println("<li>Categoria : <input id=\"categoria_nueva\" name=\"categoria_nueva\" type=\"text\" value=\""+categoria+"\" /></li>");
-            out.println("<li>Precio : <input id=\"precio_nuevo\" name=\"precio_nuevo\" type=\"text\" value=\""+precio+"\" /></li>");
+            out.println("Datos anteriores: </br>");
+            out.println("<ul>");
+            out.println("<li>ID : "+ID+"</li>");
+            out.println("<li>Stock : "+rs.getString("stock")+"</li>");
+            out.println("<li>Nombre : "+rs.getString("descripcion")+"</li>");
+            out.println("<li>Categoria : "+rs.getString("categoria")+"</li>");
+            out.println("<li>Precio : $"+rs.getString("precio")+"</li>");
+            out.println("</ul></br>");
+            out.println("Datos nuevos: </br>");
+            out.println("<ul>");
+            out.println("<li>ID : "+ID+"</li>");
+            out.println("<li>Stock : "+rs.getString("stock")+"</li>");
+            out.println("<li>Nombre : "+nombre_nuevo+"</li>");
+            out.println("<li>Categoria : "+categoria_nueva+"</li>");
+            out.println("<li>Precio : $"+precio_nuevo+"</li>");
             out.println("</ul>");
-            }catch(Exception ex){
             
-        }
-            out.println("</br><input name=\"boton_editar\" value\"Guardar\" type=\"submit\" />");
-            out.println("</form>");
+            }catch(Exception ex){
+                
+            }
+            
             out.println("</br><a href=\"administrar_productos\">volver</a>");
             out.println("</body>");
             out.println("</html>");
@@ -100,7 +94,19 @@ public class editar_producto extends HttpServlet {
             out.close();
         }
         
+        try{
         
+                conn=Main.Enlace(conn);
+            st=Main.sta(st);
+            rs=Main.EnlEst(rs);
+            rs.next();
+            
+            rs = st.executeQuery("update producto set descripcion='"+nombre_nuevo+"', categoria='"+categoria_nueva+"', precio='"+precio_nuevo+"' where id_producto="+ID+"");
+            
+            
+        }catch(Exception ex){
+            
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
