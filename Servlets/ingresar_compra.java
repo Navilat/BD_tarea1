@@ -50,7 +50,7 @@ public class ingresar_compra extends HttpServlet {
             out.println("Precio:");
             out.println("<input id=\"txtPrecio\" name=\"txtPrecio\" type=\"text\" /><br/>");
            
-            out.println("<input id=\"botonGuardar\" value=\"Finalizar\" type=\"submit\" />");
+            out.println("<input id=\"botonGuardar\" value=\"Agregar\" type=\"submit\" />");
             out.println("</form>");
             out.println("<br/>");
             //Volver

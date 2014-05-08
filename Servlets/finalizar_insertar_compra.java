@@ -25,7 +25,9 @@ import javax.swing.*;
  */
 @WebServlet(name = "finalizar_insertar_compra", urlPatterns = {"/finalizar_insertar_compra"})
 public class finalizar_insertar_compra extends HttpServlet {
-    static int gate=0;
+    static int gate;
+    static int new_id_compra=0;
+    static int total;
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -39,7 +41,8 @@ public class finalizar_insertar_compra extends HttpServlet {
         int cantidad = Integer.parseInt(request.getParameter("txtCantidad"));
         int precio = Integer.parseInt(request.getParameter("txtPrecio"));
         int new_id_detalle=0;
-        int new_id_compra=0;
+        total+=precio;
+        gate=1;
         
         
         
@@ -96,6 +99,7 @@ public class finalizar_insertar_compra extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h5>" + user + " como: administrador.</h5>");
+            out.println("<h4>El producto ha sido agregado a la compra.</h4>");
             out.println("<h4>Ingrese el detalle de la compra:</h4>");
             out.println("<br/>");
             out.println("<form name=\"datos\" action=\"finalizar_insertar_compra\" method=\"Post\">");
@@ -106,12 +110,12 @@ public class finalizar_insertar_compra extends HttpServlet {
             out.println("Precio:");
             out.println("<input id=\"txtPrecio\" name=\"txtPrecio\" type=\"text\" /><br/>");
            
-            out.println("<input id=\"botonGuardar\" value=\"Finalizar\" type=\"submit\" />");
+            out.println("<input id=\"botonGuardar\" value=\"Agregar\" type=\"submit\" />");
             out.println("</form>");
             out.println("<br/>");
             //Volver
             out.println("<form name=\"datos\" action=\"adminMenu\" method=\"Post\">");
-            out.println("<input id=\"botonVolver\" value=\"Volver\" type=\"submit\" />");
+            out.println("<input id=\"botonVolver\" value=\"Finalizar\" type=\"submit\" />");
             out.println("</form>");
             
             out.println("</body>");

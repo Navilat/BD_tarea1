@@ -8,12 +8,21 @@ import OracleConection.Main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import static Servlets.Entrar.conn;
+import static Servlets.Entrar.rs;
+import static Servlets.Entrar.st;
+import static Servlets.Entrar.tipo;
+import static Servlets.Entrar.user;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static Servlets.Entrar.user;
+import javax.swing.JOptionPane;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  *
@@ -31,6 +40,21 @@ public class adminMenu extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (finalizar_insertar_compra.gate==1){ //gate vale 1 si se ha agregado al menos un producto en "ingresar compra"
+            //se agrega un registro en compra:
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            
+	   Date date = new Date();
+ 
+	   Calendar cal = Calendar.getInstance();
+            try{
+                rs = st.executeQuery("insert into COMPRA (id_compra, monto_total, fecha, hora) values ("+finalizar_insertar_compra.new_id_compra+","+finalizar_insertar_compra.total+",'"+dateFormat.format(cal.getTime())+"',CURRENT_TIMESTAMP)");
+                finalizar_insertar_compra.gate=0;
+            }catch(Exception ex){
+            
+            }
+        }
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
